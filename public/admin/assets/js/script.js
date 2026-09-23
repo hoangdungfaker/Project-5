@@ -1,6 +1,6 @@
 // Menu Mobile
 const buttonMenuMobile = document.querySelector(".header .inner-button-menu");
-if(buttonMenuMobile) {
+if (buttonMenuMobile) {
   const sider = document.querySelector(".sider");
   const siderOverlay = document.querySelector(".sider-overlay");
 
@@ -18,7 +18,7 @@ if(buttonMenuMobile) {
 
 // Schedule Section 8
 const scheduleSection8 = document.querySelector(".section-8 .inner-schedule");
-if(scheduleSection8) {
+if (scheduleSection8) {
   const buttonCreate = scheduleSection8.querySelector(".inner-schedule-create");
   const listItem = scheduleSection8.querySelector(".inner-schedule-list");
 
@@ -38,18 +38,18 @@ if(scheduleSection8) {
 
   listItem.addEventListener("click", (event) => {
     // Đóng/mở item
-    if(event.target.closest(".inner-more")) {
+    if (event.target.closest(".inner-more")) {
       const parentItem = event.target.closest(".inner-schedule-item");
-      if(parentItem) {
+      if (parentItem) {
         parentItem.classList.toggle("hidden");
       }
     }
 
     // Xóa item
-    if(event.target.closest(".inner-remove")) {
+    if (event.target.closest(".inner-remove")) {
       const parentItem = event.target.closest(".inner-schedule-item");
       const totalItem = listItem.querySelectorAll(".inner-schedule-item").length;
-      if(parentItem && totalItem > 1) {
+      if (parentItem && totalItem > 1) {
         parentItem.remove();
       }
     }
@@ -76,7 +76,7 @@ if(scheduleSection8) {
 // Filepond Image
 const listFilepondImage = document.querySelectorAll("[filepond-image]");
 let filePond = {};
-if(listFilepondImage.length > 0) {
+if (listFilepondImage.length > 0) {
   listFilepondImage.forEach(filepondImage => {
     FilePond.registerPlugin(FilePondPluginImagePreview);
     FilePond.registerPlugin(FilePondPluginFileValidateType);
@@ -90,7 +90,7 @@ if(listFilepondImage.length > 0) {
 
 // Biểu đồ doanh thu
 const revenueChart = document.querySelector("#revenue-chart");
-if(revenueChart) {
+if (revenueChart) {
   new Chart(revenueChart, {
     type: 'line',
     data: {
@@ -138,7 +138,7 @@ if(revenueChart) {
 
 // Category Create Form
 const categoryCreateForm = document.querySelector("#category-create-form");
-if(categoryCreateForm) {
+if (categoryCreateForm) {
   const validation = new JustValidate('#category-create-form');
 
   validation
@@ -155,25 +155,40 @@ if(categoryCreateForm) {
       const status = event.target.status.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
       const description = tinymce.get("description").getContent();
 
-      console.log(name);
-      console.log(parent);
-      console.log(position);
-      console.log(status);
-      console.log(avatar);
-      console.log(description);
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("parent", parent);
+      formData.append("position", position);
+      formData.append("status", status);
+      formData.append("avatar", avatar);
+      formData.append("description", description);
+
+      fetch(`/${pathAdmin}/category/create`, {
+        method: "POST",
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.code == "error") {
+            alert(data.message);
+          }
+          if (data.code == "success") {
+            window.location.href = `/${pathAdmin}/category/list`
+          }
+        })
     })
-  ;
+    ;
 }
 // End Category Create Form
 
 // Tour Create Form
 const tourCreateForm = document.querySelector("#tour-create-form");
-if(tourCreateForm) {
+if (tourCreateForm) {
   const validation = new JustValidate('#tour-create-form');
 
   validation
@@ -190,7 +205,7 @@ if(tourCreateForm) {
       const status = event.target.status.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
       const priceAdult = event.target.priceAdult.value;
@@ -232,7 +247,7 @@ if(tourCreateForm) {
         });
       })
       // End schedules
-      
+
       console.log(name);
       console.log(category);
       console.log(position);
@@ -254,13 +269,13 @@ if(tourCreateForm) {
       console.log(information);
       console.log(schedules);
     })
-  ;
+    ;
 }
 // End Tour Create Form
 
 // Order Edit Form
 const orderEditForm = document.querySelector("#order-edit-form");
-if(orderEditForm) {
+if (orderEditForm) {
   const validation = new JustValidate('#order-edit-form');
 
   validation
@@ -306,13 +321,13 @@ if(orderEditForm) {
       console.log(paymentStatus);
       console.log(status);
     })
-  ;
+    ;
 }
 // End Order Edit Form
 
 // Setting Website Info Form
 const settingWebsiteInfoForm = document.querySelector("#setting-website-info-form");
-if(settingWebsiteInfoForm) {
+if (settingWebsiteInfoForm) {
   const validation = new JustValidate('#setting-website-info-form');
 
   validation
@@ -335,12 +350,12 @@ if(settingWebsiteInfoForm) {
       const address = event.target.address.value;
       const logos = filePond.logo.getFiles();
       let logo = null;
-      if(logos.length > 0) {
+      if (logos.length > 0) {
         logo = logos[0].file;
       }
       const favicons = filePond.favicon.getFiles();
       let favicon = null;
-      if(favicons.length > 0) {
+      if (favicons.length > 0) {
         favicon = favicons[0].file;
       }
 
@@ -351,13 +366,13 @@ if(settingWebsiteInfoForm) {
       console.log(logo);
       console.log(favicon);
     })
-  ;
+    ;
 }
 // End Setting Website Info Form
 
 // Setting Account Admin Create Form
 const settingAccountAdminCreateForm = document.querySelector("#setting-account-admin-create-form");
-if(settingAccountAdminCreateForm) {
+if (settingAccountAdminCreateForm) {
   const validation = new JustValidate('#setting-account-admin-create-form');
 
   validation
@@ -440,7 +455,7 @@ if(settingAccountAdminCreateForm) {
       const password = event.target.password.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
 
@@ -453,13 +468,13 @@ if(settingAccountAdminCreateForm) {
       console.log(password);
       console.log(avatar);
     })
-  ;
+    ;
 }
 // End Setting Account Admin Create Form
 
 // Setting Role Create Form
 const settingRoleCreateForm = document.querySelector("#setting-role-create-form");
-if(settingRoleCreateForm) {
+if (settingRoleCreateForm) {
   const validation = new JustValidate('#setting-role-create-form');
 
   validation
@@ -485,13 +500,13 @@ if(settingRoleCreateForm) {
       console.log(description);
       console.log(permissions);
     })
-  ;
+    ;
 }
 // End Setting Role Create Form
 
 // Profile Edit Form
 const profileEditForm = document.querySelector("#profile-edit-form");
-if(profileEditForm) {
+if (profileEditForm) {
   const validation = new JustValidate('#profile-edit-form');
 
   validation
@@ -538,7 +553,7 @@ if(profileEditForm) {
       const phone = event.target.phone.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
 
@@ -547,13 +562,13 @@ if(profileEditForm) {
       console.log(phone);
       console.log(avatar);
     })
-  ;
+    ;
 }
 // End Profile Edit Form
 
 // Profile Change Password Form
 const profileChangePasswordForm = document.querySelector("#profile-change-password-form");
-if(profileChangePasswordForm) {
+if (profileChangePasswordForm) {
   const validation = new JustValidate('#profile-change-password-form');
 
   validation
@@ -600,13 +615,13 @@ if(profileChangePasswordForm) {
       const password = event.target.password.value;
       console.log(password);
     })
-  ;
+    ;
 }
 // End Profile Change Password Form
 
 // Sider
 const sider = document.querySelector(".sider");
-if(sider) {
+if (sider) {
   const pathNameCurrent = window.location.pathname;
   const splitPathNameCurrent = pathNameCurrent.split("/");
   const menuList = sider.querySelectorAll("a");
@@ -614,7 +629,7 @@ if(sider) {
     const href = item.href;
     const pathName = new URL(href).pathname;
     const splitPathName = pathName.split("/");
-    if(splitPathNameCurrent[1] == splitPathName[1] && splitPathNameCurrent[2] == splitPathName[2]) {
+    if (splitPathNameCurrent[1] == splitPathName[1] && splitPathNameCurrent[2] == splitPathName[2]) {
       item.classList.add("active");
     }
   })
@@ -623,14 +638,14 @@ if(sider) {
 
 // Logout
 const buttonLogout = document.querySelector(".sider .inner-logout");
-if(buttonLogout) {
+if (buttonLogout) {
   buttonLogout.addEventListener("click", () => {
     fetch(`/${pathAdmin}/account/logout`, {
       method: "POST"
     })
       .then(res => res.json())
       .then(data => {
-        if(data.code == "success") {
+        if (data.code == "success") {
           window.location.href = `/${pathAdmin}/account/login`;
         }
       })
