@@ -20,6 +20,9 @@ module.exports.createPost = async (req, res) => {
   }
   req.body.createdBy = req.account.id;
   req.body.updateBy = req.account.id;
+  if (req.file) {
+    req.body.avatar = req.file.path; // URL ảnh từ Cloudinary
+  }
   const newRecord = new category(req.body);
   await newRecord.save();
   res.json({

@@ -26,6 +26,8 @@ app.locals.pathAdmin = variableConfig.pathAdmin;
 // Tạo biến toàn cục trong các file js backend
 global.pathAdmin = variableConfig.pathAdmin;
 
+//  
+
 // Cho phép gửi data lên dạng json
 app.use(express.json());
 
